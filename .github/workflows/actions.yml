@@ -13,8 +13,8 @@ jobs:
 
       - name: Download Lazarus + FPC Source
         run: |
-          Invoke-WebRequest -Uri "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-win64.exe" -OutFile "lazarus.exe"
-          Invoke-WebRequest -Uri "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-cross-i386-win32-win64.exe" -OutFile "lazarus-ext.exe"
+          curl -L -o lazarus.exe "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-win64.exe"
+          curl -L -o lazarus-ext.exe "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-cross-i386-win32-win64.exe"
 
       - name: Install Lazarus
         run: |
