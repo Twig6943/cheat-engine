@@ -31,7 +31,7 @@ jobs:
 
       - name: Where Lazarus
         run: |
-          dir C:\lazarus
+          dir D:\a\cheat-engine\cheat-engine
           where lazarus
           where lazbuild
           
