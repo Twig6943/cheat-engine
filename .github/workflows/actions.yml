@@ -26,7 +26,7 @@ jobs:
       - name: Create Lazarus Config Directory
         run: |
           mkdir C:\laz_config
-          Start-Process -FilePath "C:\lazarus\lazarus.exe" -ArgumentList "--primary-config-path=C:\laz_config" -Wait
+          lazbuild --primary-config-path=C:\laz_config --build-ide=
 
       - name: Clone & Build Cheat Engine
         run: |
