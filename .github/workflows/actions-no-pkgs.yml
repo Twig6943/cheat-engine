@@ -1,19 +1,15 @@
-name: Build Cheat Engine
+name: Install Lazarus Custom
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  install-lazarus:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout (placeholder)
         uses: actions/checkout@v4
-
-      - name: Clone Cheat Engine Repository
-        run: |
-          git clone https://github.com/Twig6943/cheat-engine.git
 
       - name: Download Lazarus Installer
         run: |
@@ -36,26 +32,16 @@ jobs:
           $envXml = @"
           <CONFIG>
             <EnvironmentOptions>
-              <LazarusDirectory Value="C:\Lazarus"/>
-              <CompilerPath Value="C:\Lazarus\fpc\3.0.2\bin\x86_64-win64\fpc.exe"/>
+              <LazarusDirectory Value='C:\Lazarus'/>
+              <CompilerPath Value='C:\Lazarus\fpc\3.0.2\bin\x86_64-win64\fpc.exe'/>
             </EnvironmentOptions>
           </CONFIG>
           "@
           $envXml | Out-File -Encoding utf8 "$configDir\environmentoptions.xml"
 
-      - name: Add Required Packages
+      - name: Install Synapse Package
         shell: pwsh
         run: |
-          Copy-Item -Recurse -Force "cheat-engine\packages\synapse" "C:\Lazarus\components\synapse"
+          # Example: Assuming you commit Synapse to the repo under packages/synapse/
+          Copy-Item -Recurse -Force "packages\synapse" "C:\Lazarus\components\synapse"
           & "C:\Lazarus\lazbuild.exe" --add-package "C:\Lazarus\components\synapse\synapse.lpk"
-
-      - name: Build Cheat Engine
-        run: |
-          cd "cheat-engine\Cheat Engine"
-          "C:\Lazarus\lazbuild.exe" cheatengine.lpi
-
-      - name: Upload Cheat Engine Executable
-        uses: actions/upload-artifact@v4
-        with:
-          name: cheatengine
-          path: cheat-engine/Cheat Engine/bin
