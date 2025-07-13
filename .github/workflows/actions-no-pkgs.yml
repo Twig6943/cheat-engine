@@ -34,13 +34,13 @@ jobs:
           $configDir = "$env:USERPROFILE\AppData\Local\lazarus"
           New-Item -ItemType Directory -Force -Path $configDir | Out-Null
           $envXml = @"
-<CONFIG>
-  <EnvironmentOptions>
-    <LazarusDirectory Value="C:\Lazarus"/>
-    <CompilerPath Value="C:\Lazarus\fpc\3.0.2\bin\x86_64-win64\fpc.exe"/>
-  </EnvironmentOptions>
-</CONFIG>
-"@
+          <CONFIG>
+            <EnvironmentOptions>
+              <LazarusDirectory Value="C:\Lazarus"/>
+              <CompilerPath Value="C:\Lazarus\fpc\3.0.2\bin\x86_64-win64\fpc.exe"/>
+            </EnvironmentOptions>
+          </CONFIG>
+          "@
           $envXml | Out-File -Encoding utf8 "$configDir\environmentoptions.xml"
 
       - name: Add Required Packages
