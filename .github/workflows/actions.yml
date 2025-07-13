@@ -15,16 +15,11 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-win64.exe" -OutFile "lazarus.exe"
           Invoke-WebRequest -Uri "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-cross-i386-win32-win64.exe" -OutFile "lazarus-ext.exe"
-          Invoke-WebRequest -Uri "https://github.com/Twig6943/cheat-engine/releases/download/1.0/fpc-3.0.2.source.tar.gz" -OutFile "fpc-3.0.2.source.tar.gz"
 
       - name: Install Lazarus
         run: |
           .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /DIR="C:\lazarus"
           .\lazarus-ext.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /DIR="C:\lazarus"
-
-      - name: Extract FPC Source
-        run: |
-          tar -xf fpc-3.0.2.source.tar.gz -C "C:\lazarus\fpc\3.0.2"
 
       - name: Add Lazarus to PATH
         run: |
@@ -37,16 +32,12 @@ jobs:
           echo "FPCTARGET=x86_64-win64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "FPCTARGETCPU=x86_64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
 
-      - name: Initialize Lazarus Config
-        run: |
-          mkdir C:\laz_config
-          lazbuild --lazarusdir=C:\lazarus --primary-config-path=C:\laz_config --build-ide=
-
       - name: Clone & Build Cheat Engine
         run: |
           git clone https://github.com/Twig6943/cheat-engine.git
           cd "cheat-engine\Cheat Engine"
-          lazbuild --lazarusdir=C:\lazarus --primary-config-path=C:\laz_config cheatengine.lpi
+          dir C:\lazarus\lcl
+          lazbuild --lazarusdir=C:\lazarus cheatengine.lpi
 
       - name: Upload Cheat Engine Executable
         uses: actions/upload-artifact@v4
