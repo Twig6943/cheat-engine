@@ -17,12 +17,12 @@ jobs:
 
       - name: Install Lazarus Silently
         run: |
-          .\lazarus.exe /VERYSILENT /DIR="C:\Lazarus" /COMPONENTS="main"
+          .\lazarus.exe /VERYSILENT /DIR="C:\lazarus" /COMPONENTS="main"
 
       - name: Add Lazarus to PATH
         shell: pwsh
         run: |
-          echo "C:\Lazarus" | Out-File -Append -FilePath $env:GITHUB_PATH
+          echo "C:\lazarus" | Out-File -Append -FilePath $env:GITHUB_PATH
 
       - name: Create Lazarus Environment Config
         shell: pwsh
@@ -32,8 +32,8 @@ jobs:
           $envXml = @"
           <CONFIG>
             <EnvironmentOptions>
-              <LazarusDirectory Value='C:\Lazarus'/>
-              <CompilerPath Value='C:\Lazarus\fpc\3.0.2\bin\x86_64-win64\fpc.exe'/>
+              <LazarusDirectory Value='C:\lazarus'/>
+              <CompilerPath Value='C:\lazarus\fpc\3.0.2\bin\x86_64-win64\fpc.exe'/>
             </EnvironmentOptions>
           </CONFIG>
           "@
@@ -43,5 +43,5 @@ jobs:
         shell: pwsh
         run: |
           # Example: Assuming you commit Synapse to the repo under packages/synapse/
-          Copy-Item -Recurse -Force "packages\synapse" "C:\Lazarus\components\synapse"
-          & "C:\Lazarus\lazbuild.exe" --add-package "C:\Lazarus\components\synapse\synapse.lpk"
+          Copy-Item -Recurse -Force "packages\synapse" "C:\lazarus\components\synapse"
+          & "C:\lazarus\lazbuild.exe" --add-package "C:\lazarus\components\synapse\synapse.lpk"
