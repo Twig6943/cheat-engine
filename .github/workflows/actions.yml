@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Cheat Engine
         run: |
-          cd "cheat-engine\Cheat Engine"
+          cd "cheat-engine/Cheat Engine"
           lazbuild cheatengine.lpi
 
       - name: Upload Cheat Engine Executable
