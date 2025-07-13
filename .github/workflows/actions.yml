@@ -27,7 +27,6 @@ jobs:
 
       - name: Set Lazarus Environment Variables
         run: |
-          echo "FPCDIR=C:\lazarus\fpc\3.0.2\fpc-3.0.2" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "LAZARUSDIR=C:\lazarus" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "FPCTARGET=x86_64-win64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "FPCTARGETCPU=x86_64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
@@ -36,7 +35,7 @@ jobs:
         run: |
           git clone https://github.com/Twig6943/cheat-engine.git
           cd "cheat-engine\Cheat Engine"
-          dir C:\lazarus\lcl
+          dir C:\lazarus
           lazbuild --lazarusdir=C:\lazarus cheatengine.lpi
 
       - name: Upload Cheat Engine Executable
