@@ -20,6 +20,9 @@ jobs:
         run: |
           .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
           .\lazarus-ext.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+      
+      - name: Where Lazarus
+        run: |
           where lazarus
 
       - name: Set Lazarus Environment Variables
