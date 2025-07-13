@@ -15,7 +15,7 @@ jobs:
       - name: Download Lazarus 1.6.4
         run: |
           curl -L -o D:\a\_temp\installers\lazarus-1.6.4.exe ^
-            "https://sourceforge.net/projects/lazarus/files/Lazarus%20Windows%2064%20bits/Lazarus%201.6.4/lazarus-1.6.4-fpc-3.0.2-win64.exe"
+            "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-win64.exe"
 
       - name: Install Lazarus Silently
         run: |
