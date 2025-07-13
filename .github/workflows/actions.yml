@@ -39,5 +39,4 @@ jobs:
 
       - name: Compile Synapse Package
         run: |
-          D:\a\_temp\installers\lazarus\lazbuild.exe ^
-            D:\a\_temp\synapse40.1\synapse40.1\laz_synapse.lpk
+          D:\a\_temp\installers\lazarus\lazbuild.exe D:\a\_temp\synapse40.1\synapse40.1\laz_synapse.lpk
