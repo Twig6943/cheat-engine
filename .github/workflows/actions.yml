@@ -36,4 +36,4 @@ jobs:
         run: |
           git clone https://github.com/Twig6943/cheat-engine.git
           cd "cheat-engine\Cheat Engine"
-          lazbuild --primary-config-path=C:\laz_config cheatengine.lpi
+          lazbuild cheatengine.lpi
