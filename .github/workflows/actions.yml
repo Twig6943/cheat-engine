@@ -26,5 +26,5 @@ jobs:
       - name: Clone & Build Cheat Engine
         run: |
           git clone https://github.com/Twig6943/cheat-engine.git
-          cd "cheat-engine\Cheat Engine"
+          cd "cheat-engine"
           lazbuild cheatengine.lpi
