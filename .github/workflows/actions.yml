@@ -33,6 +33,7 @@ jobs:
       - name: Where Lazarus
         run: |
           where lazarus
+          where lazbuild
 
       - name: Clone & Build Cheat Engine
         run: |
