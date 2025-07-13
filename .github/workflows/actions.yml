@@ -25,7 +25,11 @@ jobs:
       - name: Build Cheat Engine
         run: |
           cd "cheat-engine\Cheat Engine"
+          pwd
+          dir
           lazbuild cheatengine.lpi
+          pwd
+          dir
 
       - name: Upload Cheat Engine Executable
         uses: actions/upload-artifact@v4
