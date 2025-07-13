@@ -1,4 +1,4 @@
-name: Build
+name: Build Cheat Engine
 
 on:
   workflow_dispatch:
@@ -10,3 +10,19 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Download Lazarus 1.6.4 Installer
+        run: |
+          Invoke-WebRequest -Uri "https://sourceforge.net/projects/lazarus/files/Lazarus%20Windows%2032%20bits/Lazarus%201.6.4/lazarus-1.6.4-fpc-3.0.2-win32.exe/download" -OutFile "lazarus_installer.exe"
+
+      - name: Install Lazarus 1.6.4 Silently
+        run: |
+          .\lazarus_installer.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
+
+      - name: Add Lazarus to PATH
+        run: |
+          echo "C:\lazarus" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
+
+      - name: Build Cheat Engine Project
+        run: |
+          lazbuild cheatengine.lpi
