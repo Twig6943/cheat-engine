@@ -23,6 +23,8 @@ jobs:
         run: |
           echo "C:\lazarus" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
-      - name: Build Cheat Engine Project
+      - name: Clone & Build Cheat Engine
         run: |
+          git clone https://github.com/Twig6943/cheat-engine.git
+          cd cheat-engine\Cheat Engine
           lazbuild cheatengine.lpi
