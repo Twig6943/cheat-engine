@@ -32,6 +32,12 @@ jobs:
           echo "FPCTARGET=x86_64-win64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "FPCTARGETCPU=x86_64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
 
+
+      - name: Check FPC and LCL Presence
+        run: |
+          dir C:\lazarus\fpc\3.0.2\source
+          dir C:\lazarus\fpc\3.0.2\source\lcl
+
       - name: Initialize Lazarus Config
         run: |
           mkdir C:\laz_config
