@@ -11,27 +11,24 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Clone & Build Cheat Engine
+      - name: Clone Cheat Engine Repository
         run: |
           git clone https://github.com/Twig6943/cheat-engine.git
-          cd "cheat-engine\Cheat Engine"
-          pwd
-          dir D:\a\cheat-engine\cheat-engine
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: gcarreno/setup-lazarus@v3
+      - name: Setup Lazarus
+        uses: gcarreno/setup-lazarus@v3
         with:
-      lazarus-version: "1.6.4"
-      include-packages: "Synapse 40.1"
-      with-cache: true
-      - run: lazbuild cheatengine.lpi
-      #- run: Cheat Engine
-     
+          lazarus-version: "1.6.4"
+          include-packages: "Synapse 40.1"
+          with-cache: true
 
+      - name: Build Cheat Engine
+        run: |
+          cd cheat-engine
+          lazbuild cheatengine.lpi
 
       - name: Upload Cheat Engine Executable
         uses: actions/upload-artifact@v4
         with:
           name: cheatengine
-          path: cheat-engine\Cheat Engine\cheatengine.exe
+          path: cheat-engine\cheatengine.exe
