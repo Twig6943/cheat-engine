@@ -18,17 +18,21 @@ jobs:
 
       - name: Install Lazarus
         run: |
-          .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
-          .\lazarus-ext.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
-      
-      - name: Where Lazarus
+          .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="C:\lazarus"
+          .\lazarus-ext.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="C:\lazarus"
+
+      - name: Add Lazarus to PATH
         run: |
-          where lazarus
+          echo "C:\lazarus" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
       - name: Set Lazarus Environment Variables
         run: |
           echo "FPCTARGET=x86_64-win64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "FPCTARGETCPU=x86_64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+
+      - name: Where Lazarus
+        run: |
+          where lazarus
 
       - name: Clone & Build Cheat Engine
         run: |
