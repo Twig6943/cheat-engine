@@ -17,7 +17,7 @@ jobs:
 
       - name: Install Lazarus 1.6.4 Silently
         run: |
-          lazarus_installer.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
+          lazarus-1.6.4-fpc-3.0.2-win64.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
 
       - name: Add Lazarus to PATH
         run: |
