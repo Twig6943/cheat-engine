@@ -22,11 +22,15 @@ jobs:
       - name: Add Lazarus to PATH
         run: |
           echo "C:\lazarus" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
+          echo "FPCDIR=C:\lazarus\fpc\3.0.2\source" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+          echo "LAZARUSDIR=C:\lazarus" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+          echo "FPCTARGET=x86_64-win64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+          echo "FPCTARGETCPU=x86_64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
 
-      - name: Create Lazarus Config Directory
-        run: |
-          mkdir C:\laz_config
-          lazbuild --primary-config-path=C:\laz_config --build-ide=
+      #- name: Create Lazarus Config Directory
+        #run: |
+          #mkdir C:\laz_config
+          #lazbuild --primary-config-path=C:\laz_config --build-ide=
 
       - name: Clone & Build Cheat Engine
         run: |
