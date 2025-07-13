@@ -13,7 +13,7 @@ jobs:
 
       - name: Download Lazarus 1.6.4 Installer
         run: |
-          Invoke-WebRequest -Uri "https://sourceforge.net/projects/lazarus/files/Lazarus%20Windows%2032%20bits/Lazarus%201.6.4/lazarus-1.6.4-fpc-3.0.2-win32.exe/download" -OutFile "lazarus_installer.exe"
+          Invoke-WebRequest -Uri "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-win64.exe" -OutFile "lazarus-1.6.4-fpc-3.0.2-win64.exe"
 
       - name: Install Lazarus 1.6.4 Silently
         run: |
