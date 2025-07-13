@@ -17,18 +17,19 @@ jobs:
 
       - name: Install Lazarus 1.6.4 Silently
         run: |
-          .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
-
-      - name: Set LAZARUS_DIR
-        run: |
-          echo "LAZARUS_DIR=C:\lazarus" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+          .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="C:\lazarus"
 
       - name: Add Lazarus to PATH
         run: |
           echo "C:\lazarus" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
+      - name: Create Lazarus Config Directory
+        run: |
+          mkdir C:\laz_config
+          Start-Process -FilePath "C:\lazarus\lazarus.exe" -ArgumentList "--primary-config-path=C:\laz_config" -Wait
+
       - name: Clone & Build Cheat Engine
         run: |
           git clone https://github.com/Twig6943/cheat-engine.git
           cd "cheat-engine\Cheat Engine"
-          lazbuild cheatengine.lpi
+          lazbuild --primary-config-path=C:\laz_config cheatengine.lpi
