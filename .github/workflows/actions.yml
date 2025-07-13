@@ -1,0 +1,34 @@
+name: Build Cheat Engine
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Clone Cheat Engine Repository
+        run: |
+          git clone https://github.com/Twig6943/cheat-engine.git
+
+      - name: Setup Lazarus
+        uses: gcarreno/setup-lazarus@v3
+        with:
+          lazarus-version: "1.6.4"
+          include-packages: "Synapse 40.1"
+          with-cache: true
+
+      - name: Build Cheat Engine
+        run: |
+          cd "cheat-engine\Cheat Engine"
+          lazbuild cheatengine.lpi
+
+      - name: Upload Cheat Engine Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: cheatengine
+          path: cheat-engine/Cheat Engine/bin
