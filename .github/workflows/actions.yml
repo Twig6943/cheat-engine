@@ -21,7 +21,7 @@ jobs:
         run: |
           .\lazarus.exe /VERYSILENT /DIR="C:\lazarus"
           .\lazarus-ext.exe /VERYSILENT /DIR="C:\lazarus"
-          tar -xzf lcl.tar.gz -C C:\lazarus
+          
 
       - name: Add Lazarus to PATH
         run: |
@@ -37,6 +37,10 @@ jobs:
           dir C:\lazarus
           where lazarus
           where lazbuild
+          
+      - name: Extract lcl
+        run: |
+          tar -xzf lcl.tar.gz -C C:\lazarus
 
       - name: Clone & Build Cheat Engine
         run: |
