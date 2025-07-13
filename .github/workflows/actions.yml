@@ -32,6 +32,7 @@ jobs:
 
       - name: Where Lazarus
         run: |
+          dir C:\lazarus
           where lazarus
           where lazbuild
 
