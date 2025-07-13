@@ -18,7 +18,7 @@ jobs:
       - name: Install Lazarus
         run: |
           pwd
-          .\lazarus.exe /SILENT /DIR="D:\lazarus"
+          .\lazarus.exe /SILENT /DIR="D:\a\cheat-engine\cheat-engine"
 
       - name: Add Lazarus to PATH
         run: |
