@@ -28,8 +28,7 @@ jobs:
 
       - name: Download Synapse Package
         run: |
-          curl -L -o D:\a\_temp\Synapse40.1.zip ^
-            "https://packages.lazarus-ide.org/Synapse40.1.zip"
+          curl -L -o D:\a\_temp\Synapse40.1.zip https://packages.lazarus-ide.org/Synapse40.1.zip
 
       - name: Extract Synapse Package
         shell: pwsh
