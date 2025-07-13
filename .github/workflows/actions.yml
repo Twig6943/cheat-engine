@@ -2,7 +2,6 @@ name: Build Cheat Engine
 
 on:
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: windows-latest
@@ -11,29 +10,32 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Download Lazarus 1.6.4 Installer
+      - name: Download Lazarus Installer
         run: |
           Invoke-WebRequest -Uri "https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-win64.exe" -OutFile "lazarus.exe"
 
-      - name: Install Lazarus 1.6.4 Silently
+      - name: Install Lazarus
         run: |
           .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="C:\lazarus"
 
       - name: Add Lazarus to PATH
         run: |
           echo "C:\lazarus" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
+
+      - name: Set Lazarus Environment Variables
+        run: |
           echo "FPCDIR=C:\lazarus\fpc\3.0.2\source" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "LAZARUSDIR=C:\lazarus" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "FPCTARGET=x86_64-win64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "FPCTARGETCPU=x86_64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
 
-      #- name: Create Lazarus Config Directory
-        #run: |
-          #mkdir C:\laz_config
-          #lazbuild --primary-config-path=C:\laz_config --build-ide=
+      - name: Initialize Lazarus Config
+        run: |
+          mkdir C:\laz_config
+          lazbuild --primary-config-path=C:\laz_config --build-ide=
 
       - name: Clone & Build Cheat Engine
         run: |
           git clone https://github.com/Twig6943/cheat-engine.git
           cd "cheat-engine\Cheat Engine"
-          lazbuild cheatengine.lpi
+          lazbuild --primary-config-path=C:\laz_config cheatengine.lpi
