@@ -18,8 +18,8 @@ jobs:
 
       - name: Install Lazarus
         run: |
-          .\lazarus.exe /S
-          .\lazarus-ext.exe /S
+          .\lazarus.exe /SUPPRESSMSGBOXES
+          .\lazarus-ext.exe /SUPPRESSMSGBOXES
 
       - name: Add Lazarus to PATH
         run: |
