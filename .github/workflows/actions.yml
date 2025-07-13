@@ -22,28 +22,18 @@ jobs:
 
       - name: Add Lazarus to PATH
         run: |
-          echo "C:\lazarus" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
+          echo "D:\a\cheat-engine\cheat-engine" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
       - name: Set Lazarus Environment Variables
         run: |
           echo "FPCTARGET=x86_64-win64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
           echo "FPCTARGETCPU=x86_64" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
 
-      - name: Where Lazarus
-        run: |
-          dir D:\a\cheat-engine\cheat-engine
-          where lazarus
-          where lazbuild
-          
-      - name: Extract lcl
-        run: |
-          tar -xzf lcl.tar.gz -C C:\lazarus
-
       - name: Clone & Build Cheat Engine
         run: |
           git clone https://github.com/Twig6943/cheat-engine.git
           cd "cheat-engine\Cheat Engine"
-          dir C:\lazarus
+          dir D:\a\cheat-engine\cheat-engine
           lazbuild --lazarusdir=C:\lazarus cheatengine.lpi
 
       - name: Upload Cheat Engine Executable
