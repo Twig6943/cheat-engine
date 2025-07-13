@@ -1,43 +1,61 @@
-# This is WIP
-name: Setup Lazarus Manually
+name: Build Cheat Engine
 
 on:
   workflow_dispatch:
 
 jobs:
-  setup-lazarus:
+  build:
     runs-on: windows-latest
 
     steps:
-      - name: Create Install Directory
-        run: |
-          mkdir D:\a\_temp\installers
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Download Lazarus 1.6.4
+      - name: Clone Cheat Engine Repository
         run: |
-          curl -L -o D:\a\_temp\installers\lazarus-1.6.4.exe https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-win64.exe
+          git clone https://github.com/Twig6943/cheat-engine.git
+
+      - name: Download Lazarus Installer
+        run: |
+          curl -L -o lazarus.exe https://github.com/Twig6943/cheat-engine/releases/download/1.0/lazarus-1.6.4-fpc-3.0.2-win64.exe
 
       - name: Install Lazarus Silently
         run: |
-          D:\a\_temp\installers\lazarus-1.6.4.exe /VERYSILENT /SP- /DIR=D:\a\_temp\installers\lazarus
+          .\lazarus.exe /VERYSILENT /DIR="C:\Lazarus" /COMPONENTS="main"
 
       - name: Add Lazarus to PATH
         shell: pwsh
         run: |
-          echo "D:\a\_temp\installers\lazarus" | Out-File -Append $env:GITHUB_PATH
-          echo "D:\a\_temp\installers\lazarus\fpc\3.0.2\bin\x86_64-win64" | Out-File -Append $env:GITHUB_PATH
+          echo "C:\Lazarus" | Out-File -Append -FilePath $env:GITHUB_PATH
 
-      - name: Download Synapse Package
-        run: |
-          curl -L -o D:\a\_temp\Synapse40.1.zip https://packages.lazarus-ide.org/Synapse40.1.zip
-
-      - name: Extract Synapse Package
+      - name: Create Lazarus Environment Config
         shell: pwsh
         run: |
-          $zipPath = "D:\a\_temp\Synapse40.1.zip"
-          $extractPath = "D:\a\_temp\synapse40.1"
-          Expand-Archive -LiteralPath $zipPath -DestinationPath $extractPath -Force
+          $configDir = "$env:USERPROFILE\AppData\Local\lazarus"
+          New-Item -ItemType Directory -Force -Path $configDir | Out-Null
+          $envXml = @"
+<CONFIG>
+  <EnvironmentOptions>
+    <LazarusDirectory Value="C:\Lazarus"/>
+    <CompilerPath Value="C:\Lazarus\fpc\3.0.2\bin\x86_64-win64\fpc.exe"/>
+  </EnvironmentOptions>
+</CONFIG>
+"@
+          $envXml | Out-File -Encoding utf8 "$configDir\environmentoptions.xml"
 
-      - name: Compile Synapse Package
+      - name: Add Required Packages
+        shell: pwsh
         run: |
-          D:\a\_temp\installers\lazarus\lazbuild.exe D:\a\_temp\synapse40.1\synapse40.1\laz_synapse.lpk
+          Copy-Item -Recurse -Force "cheat-engine\packages\synapse" "C:\Lazarus\components\synapse"
+          & "C:\Lazarus\lazbuild.exe" --add-package "C:\Lazarus\components\synapse\synapse.lpk"
+
+      - name: Build Cheat Engine
+        run: |
+          cd "cheat-engine\Cheat Engine"
+          "C:\Lazarus\lazbuild.exe" cheatengine.lpi
+
+      - name: Upload Cheat Engine Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: cheatengine
+          path: cheat-engine/Cheat Engine/bin
