@@ -1,34 +1,45 @@
-name: Build Cheat Engine
+name: Setup Lazarus Manually
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  setup-lazarus:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Clone Cheat Engine Repository
+      - name: Create Install Directory
         run: |
-          git clone https://github.com/Twig6943/cheat-engine.git
+          mkdir D:\a\_temp\installers
 
-      - name: Setup Lazarus
-        uses: gcarreno/setup-lazarus@v3
-        with:
-          lazarus-version: "1.6.4"
-          include-packages: "Synapse 40.1"
-          with-cache: true
-
-      - name: Build Cheat Engine
+      - name: Download Lazarus 1.6.4
         run: |
-          cd "cheat-engine\Cheat Engine"
-          lazbuild cheatengine.lpi
-          
-      - name: Upload Cheat Engine Executable
-        uses: actions/upload-artifact@v4
-        with:
-          name: cheatengine
-          path: cheat-engine/Cheat Engine/bin
+          curl -L -o D:\a\_temp\installers\lazarus-1.6.4.exe ^
+            "https://sourceforge.net/projects/lazarus/files/Lazarus%20Windows%2064%20bits/Lazarus%201.6.4/lazarus-1.6.4-fpc-3.0.2-win64.exe"
+
+      - name: Install Lazarus Silently
+        run: |
+          D:\a\_temp\installers\lazarus-1.6.4.exe /VERYSILENT /SP- /DIR=D:\a\_temp\installers\lazarus
+
+      - name: Add Lazarus to PATH
+        shell: pwsh
+        run: |
+          echo "D:\a\_temp\installers\lazarus" | Out-File -Append $env:GITHUB_PATH
+          echo "D:\a\_temp\installers\lazarus\fpc\3.0.2\bin\x86_64-win64" | Out-File -Append $env:GITHUB_PATH
+
+      - name: Download Synapse Package
+        run: |
+          curl -L -o D:\a\_temp\Synapse40.1.zip ^
+            "https://packages.lazarus-ide.org/Synapse40.1.zip"
+
+      - name: Extract Synapse Package
+        shell: pwsh
+        run: |
+          $zipPath = "D:\a\_temp\Synapse40.1.zip"
+          $extractPath = "D:\a\_temp\synapse40.1"
+          Expand-Archive -LiteralPath $zipPath -DestinationPath $extractPath -Force
+
+      - name: Compile Synapse Package
+        run: |
+          D:\a\_temp\installers\lazarus\lazbuild.exe ^
+            D:\a\_temp\synapse40.1\synapse40.1\laz_synapse.lpk
