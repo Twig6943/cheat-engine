@@ -19,8 +19,8 @@ jobs:
 
       - name: Install Lazarus
         run: |
-          .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="C:\lazarus"
-          .\lazarus-ext.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR="C:\lazarus"
+          .\lazarus.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /DIR="C:\lazarus"
+          .\lazarus-ext.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /DIR="C:\lazarus"
 
       - name: Extract FPC Source
         run: |
